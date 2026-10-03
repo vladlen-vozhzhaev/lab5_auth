@@ -72,9 +72,21 @@ jobs:
 
       - name: Init Postgres databases
         run: |
-          # Вставь сюда свои команды из ЛР4, которые создают user program,
-          # БД ratings/libraries/reservations и делают GRANT
-          bash scripts/init-db.sh
+          PG_PASS=$(kubectl get secret -n rsoi postgres-postgresql -o jsonpath='{.data.postgres-password}' | base64 -d)
+
+          kubectl exec -n rsoi postgres-postgresql-0 -- env PGPASSWORD="$PG_PASS" \
+            psql -U postgres -c "CREATE USER program WITH PASSWORD 'test' SUPERUSER;" || true
+
+          for db in ratings libraries reservations; do
+            kubectl exec -n rsoi postgres-postgresql-0 -- env PGPASSWORD="$PG_PASS" \
+              psql -U postgres -c "CREATE DATABASE $db OWNER program;" || true
+            kubectl exec -n rsoi postgres-postgresql-0 -- env PGPASSWORD="$PG_PASS" \
+              psql -U postgres -c "GRANT ALL PRIVILEGES ON DATABASE $db TO program;"
+            kubectl exec -n rsoi postgres-postgresql-0 -- env PGPASSWORD="$PG_PASS" \
+              psql -U postgres -d "$db" -c "GRANT ALL ON SCHEMA public TO program;"
+            kubectl exec -n rsoi postgres-postgresql-0 -- env PGPASSWORD="$PG_PASS" \
+              psql -U postgres -d "$db" -c "ALTER SCHEMA public OWNER TO program;"
+          done
 
       - name: Deploy services
         run: |
