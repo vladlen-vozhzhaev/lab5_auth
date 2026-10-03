@@ -2,36 +2,12 @@
   "id": "acc90f86-88ad-444e-924e-6f48f6ee7711",
   "name": "[rsoi][lab5] Library System",
   "values": [
-    {
-      "key": "serviceUrl",
-      "value": "http://localhost:8080",
-      "enabled": true
-    },
-    {
-      "key": "identityProviderUrl",
-      "value": "https://dev-1qtseeouvdob2c1k.us.auth0.com",
-      "enabled": true
-    },
-    {
-      "key": "username",
-      "value": "user1@example.com",
-      "enabled": true
-    },
-    {
-      "key": "password",
-      "value": "",
-      "enabled": true
-    },
-    {
-      "key": "clientId",
-      "value": "ChoSDtRqGUUdx9z3BMGmRgNmag1Rx0iM",
-      "enabled": true
-    },
-    {
-      "key": "clientSecret",
-      "value": "",
-      "enabled": true
-    }
+    {"key": "serviceUrl",          "value": "http://159.194.233.221.nip.io", "enabled": true},
+    {"key": "identityProviderUrl", "value": "https://dev-1qtseeouvdob2c1k.us.auth0.com", "enabled": true},
+    {"key": "username",            "value": "user1@example.com", "enabled": true},
+    {"key": "password",            "value": "User1Pass!User1Pass!", "enabled": true},
+    {"key": "clientId",            "value": "ChoSDtRqGUUdx9z3BMGmRgNmag1Rx0iM", "enabled": true},
+    {"key": "clientSecret",        "value": "hVi9cmKUi5idY9uPCh7KdtQ_4GSgGDBJ8gEkvkV-0jgb6PpCYAKz9NSvnht8yxOQ", "enabled": true}
   ],
   "_postman_variable_scope": "environment",
   "_postman_exported_at": "2021-10-15T18:17:23.977Z",
