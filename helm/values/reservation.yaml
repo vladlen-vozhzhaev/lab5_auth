@@ -1,0 +1,42 @@
+replicaCount: 1
+
+image:
+  repository: ghcr.io/vladlen-vozhzhaev/lab4-reservation
+  tag: latest
+  pullPolicy: Always
+
+service:
+  type: ClusterIP
+  port: 80
+  targetPort: 8070
+
+ingress:
+  enabled: false
+
+env:
+  - name: SPRING_DATASOURCE_URL
+    value: "jdbc:postgresql://postgres-postgresql:5432/reservations"
+  - name: SPRING_DATASOURCE_USERNAME
+    value: "program"
+  - name: SPRING_DATASOURCE_PASSWORD
+    value: "test"
+  - name: JWT_ISSUER_URI
+    value: "https://dev-1qtseeouvdob2c1k.us.auth0.com/"
+  - name: JWT_JWK_SET_URI
+    value: "https://dev-1qtseeouvdob2c1k.us.auth0.com/.well-known/jwks.json"
+
+livenessProbe:
+  httpGet:
+    path: /actuator/health/liveness
+    port: 8070
+  initialDelaySeconds: 60
+  periodSeconds: 10
+  failureThreshold: 5
+
+readinessProbe:
+  httpGet:
+    path: /actuator/health/readiness
+    port: 8070
+  initialDelaySeconds: 40
+  periodSeconds: 5
+  failureThreshold: 5
